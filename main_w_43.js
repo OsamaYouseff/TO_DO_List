@@ -3,41 +3,7 @@
 let enteredTxt = document.querySelector(".input");
 let submitBtn = document.querySelector(".add");
 let tasksContainer = document.querySelector(".tasks");
-let mainList = [];
-
-
-function restoreTasks() {
-  let mainList = JSON.parse(localStorage.getItem("tasks"));
-  if (mainList !== null) {
-    for (let i = 0; i < mainList.length; i++) {
-      //creating the task and add it to tasksContainer in DOM
-      let task = document.createElement("div");
-      task.title = mainList[i].title;
-      task.textContent = `${mainList[i].title}`;
-      task.id = `${mainList[i].id}`;
-      task.className = "task";
-      let deleteBtn = document.createElement("span");
-      deleteBtn.textContent = "Delete";
-      task.appendChild(deleteBtn);
-      tasksContainer.appendChild(task);
-      // if user clicked delete btn
-      deleteBtn.addEventListener("click", function () {
-        // remove the task from the mainList array
-        let mainList = JSON.parse(localStorage.getItem("tasks"));
-        let taskIndex = mainList.findIndex((obj) => obj.id === task.id);
-        mainList.splice(taskIndex, 1);
-        // update the localStorage with the updated mainList array
-        localStorage.setItem("tasks", JSON.stringify(mainList));
-        // remove the task from the DOM
-        task.remove();
-        if (mainList.length === 0) {
-          window.localStorage.clear();
-        }
-      });
-    }
-  }
-}
-
+let tasksList = [];
 
 // check if the local storage already has elements
 // if it has put them in tasksContainer
@@ -46,28 +12,67 @@ if (localStorage.getItem("tasks")) {
   restoreTasks();
 }
 
+function restoreTasks() {
+  let tasksList = JSON.parse(localStorage.getItem("tasks"));
+  if (tasksList !== null) {
+    for (let i = 0; i < tasksList.length; i++) {
+      //creating the task and add it to tasksContainer in DOM
+      let task = document.createElement("div");
+      task.title = tasksList[i].title;
+      task.textContent = `${tasksList[i].title}`;
+      task.id = `${tasksList[i].id}`;
+      task.className = "task";
+      let deleteBtn = document.createElement("span");
+      deleteBtn.textContent = "X";
+      //check if the task is completed or not
+      // if true add class done to make it checked
+      if (tasksList[i].status === "incomplete") {
+        task.classList.add("done");
+      }
+      task.appendChild(deleteBtn);
+      tasksContainer.appendChild(task);
+      // if user clicked delete btn
+      deleteBtn.addEventListener("click", function () {
+        // remove the task from the tasksList array
+        let tasksList = JSON.parse(localStorage.getItem("tasks"));
+        let taskIndex = tasksList.findIndex((obj) => obj.id === task.id);
+        tasksList.splice(taskIndex, 1);
+        // update the localStorage with the updated tasksList array
+        localStorage.setItem("tasks", JSON.stringify(tasksList));
+        // remove the task from the DOM
+        task.remove();
+        if (tasksList.length === 0) {
+          window.localStorage.clear();
+        }
+      });
+    }
+  }
+  createDeleteAllBtn();
+}
+
 // to create an object (task)
 function addObj(id, title) {
   let myObj = {
     id: id,
     title: `${title}`,
+    status: "incomplete",
   };
   return myObj;
 }
 
-// to store object (task) in local storage 
+// to store object (task) in local storage
 function addToLocalStorage(taskId, taskTitle) {
   // check if localStorage already has items
   if (localStorage.getItem("tasks")) {
-    mainList = JSON.parse(localStorage.getItem("tasks"));
+    tasksList = JSON.parse(localStorage.getItem("tasks"));
   }
-  // add the new task to the mainList array
-  mainList.push(addObj(taskId, taskTitle));
-  // save the updated mainList array in localStorage
-  localStorage.setItem("tasks", JSON.stringify(mainList));
+  // add the new task to the tasksList array
+  tasksList.push(addObj(taskId, taskTitle));
+  // save the updated tasksList array in localStorage
+  localStorage.setItem("tasks", JSON.stringify(tasksList));
 }
 
-// main function to create the task 
+// main function to create the task
 function createTask() {
   let task = document.createElement("div");
   task.title = enteredTxt.value;
@@ -75,7 +80,7 @@ function createTask() {
   task.id = `${Math.trunc(Math.random() * 12 ** 8)}`;
   task.className = "task";
   let deleteBtn = document.createElement("span");
-  deleteBtn.textContent = "Delete";
+  deleteBtn.textContent = "X";
   task.appendChild(deleteBtn);
   tasksContainer.appendChild(task);
   addToLocalStorage(task.id, task.title);
@@ -85,18 +90,19 @@ function createTask() {
     deleteItem;
   }
   let deleteItem = deleteBtn.addEventListener("click", function () {
-    // remove the task from the mainList array
-    let mainList = JSON.parse(localStorage.getItem("tasks"));
-    let taskIndex = mainList.findIndex((obj) => obj.id === task.id);
-    mainList.splice(taskIndex, 1);
-    // update the localStorage with the updated mainList array
-    localStorage.setItem("tasks", JSON.stringify(mainList));
+    // remove the task from the tasksList array
+    let tasksList = JSON.parse(localStorage.getItem("tasks"));
+    let taskIndex = tasksList.findIndex((obj) => obj.id === task.id);
+    tasksList.splice(taskIndex, 1);
+    // update the localStorage with the updated tasksList array
+    localStorage.setItem("tasks", JSON.stringify(tasksList));
     // remove the task from the DOM
     task.remove();
-    if (mainList.length === 0) {
+    if (tasksList.length === 0) {
       window.localStorage.clear();
     }
   });
+  createDeleteAllBtn();
 }
 
 let myFqn = (submitBtn.onclick = function () {
@@ -132,5 +138,21 @@ tasksContainer.addEventListener("click", function (event) {
   if (event.target.classList.contains("task")) {
     // toggle the "done" class on the clicked task
     event.target.classList.toggle("done");
+
+    changeStatus();
   }
 });
+
+function changeStatus() {
+  let tasksList = JSON.parse(localStorage.getItem("tasks"));
+  for (let i = 0; i < tasksList.length; i++) {
+    console.log(tasksList[i].status);
+    if (tasksList[i].status === "incomplete") {
+      tasksList[i].status = "complete";
+    } else {
+      tasksList[i].status = "incomplete";
+    }
+  }
+  // update the localStorage with the updated tasksList array
+  localStorage.setItem("tasks", JSON.stringify(tasksList));
+}
