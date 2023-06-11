@@ -1,175 +1,208 @@
-// store all Elements in variables
+///// ----------------------------------------------  Global variables  ------------------------------------------------
+let input = document.querySelector(".input");
+let addBtn = document.querySelector(".add");
+let outputSec = document.querySelector(".tasks");
+let inputTasks = [];
+let finalTasks = [];
+///// ----------------------------------------------  Global variables  ----------------------------------------------------
 
-let enteredTxt = document.querySelector(".input");
-let submitBtn = document.querySelector(".add");
-let tasksContainer = document.querySelector(".tasks");
-let tasksList = [];
-
-// check if the local storage already has elements
-// if it has put them in tasksContainer
-// else do not do anything
-if (localStorage.getItem("tasks")) {
-  restoreTasks();
-}
-
-function restoreTasks() {
-  let tasksList = JSON.parse(localStorage.getItem("tasks"));
-  if (tasksList !== null) {
-    for (let i = 0; i < tasksList.length; i++) {
-      //creating the task and add it to tasksContainer in DOM
-      let task = document.createElement("div");
-      task.title = tasksList[i].title;
-      task.textContent = `${tasksList[i].title}`;
-      task.id = `${tasksList[i].id}`;
-      task.className = "task";
-      let deleteBtn = document.createElement("span");
-      deleteBtn.textContent = "X";
-      //check if the task is completed or not
-      // if true add class done to make it checked
-      if (tasksList[i].status === "incomplete") {
-        task.classList.add("done");
-      }
-      task.appendChild(deleteBtn);
-      tasksContainer.appendChild(task);
-      // if user clicked delete btn
-      deleteBtn.addEventListener("click", function () {
-        // remove the task from the tasksList array
-        let tasksList = JSON.parse(localStorage.getItem("tasks"));
-        let taskIndex = tasksList.findIndex((obj) => obj.id === task.id);
-        tasksList.splice(taskIndex, 1);
-        // update the localStorage with the updated tasksList array
-        localStorage.setItem("tasks", JSON.stringify(tasksList));
-        // remove the task from the DOM
-        task.remove();
-        if (tasksList.length === 0) {
-          window.localStorage.clear();
-        }
-        createDeleteAllBtn();
-      });
-      // add drag and drop functionality to the task
-      task.draggable = true;
-      task.addEventListener("dragstart", function (event) {
-        event.dataTransfer.setData("text/plain", task.id);
-        event.dataTransfer.effectAllowed = "move";
-      });
-      task.addEventListener("dragover", function (event) {
-        event.preventDefault();
-        event.dataTransfer.dropEffect = "move";
-      });
-      task.addEventListener("drop", function (event) {
-        event.preventDefault();
-        let taskId = event.dataTransfer.getData("text/plain");
-        let taskToMove = document.getElementById(taskId);
-        let taskToMoveIndex = Array.from(tasksContainer.children).indexOf(
-          taskToMove
-        );
-        let dropIndex = Array.from(tasksContainer.children).indexOf(task);
-        if (taskToMoveIndex < dropIndex) {
-          tasksContainer.insertBefore(taskToMove, task.nextSibling);
-        } else {
-          tasksContainer.insertBefore(taskToMove, task);
-        }
-        updateTasksOrder();
-      });
-    }
+///// ----------------------------------------------  secondary functions  -------------------------------------------------
+function createRandomId() {
+  let random = Math.floor(Math.random() * 10);
+  let res = [];
+  for (let i = 0; i < 8; i++) {
+    res.push(random);
+    random = Math.floor(Math.random() * 10);
   }
-  createDeleteAllBtn();
+  return +res.join("");
 }
 
-// to create an object (task)
-function addObj(id, title) {
-  let myObj = {
-    id: id,
-    title: `${title}`,
-    status: "incomplete",
-  };
-  return myObj;
+function clearInput() {
+  input.value = "";
 }
 
-// to store object (task) in local storage
-function addToLocalStorage(taskId, taskTitle) {
-  // check if localStorage already has items
-  if (localStorage.getItem("tasks")) {
-    tasksList = JSON.parse(localStorage.getItem("tasks"));
-  }
-  // add the new task to the tasksList array
-  tasksList.push(addObj(taskId, taskTitle));
-  // save the updated tasksList array in localStorage
-  localStorage.setItem("tasks", JSON.stringify(tasksList));
+function clearOutput() {
+  outputSec.innerHTML = "";
+}
+///// ----------------------------------------------  secondary functions  ----------------------------------------------------
+
+//// main functions
+
+//// -----------------------------------------------  adding functions --------------------------------------------------------
+
+function addTaskToFinalArr() {
+  let myObjTask = {};
+  myObjTask.id = `${createRandomId()}`;
+  myObjTask.title = `${input.value}`;
+  myObjTask.status = "incomplete";
+  finalTasks.push(myObjTask);
 }
 
-// main function to create the task
-function createTask() {
-  let task = document.createElement("div");
-  task.title = enteredTxt.value;
-  task.textContent = `${enteredTxt.value}`;
-  task.id = `${Math.trunc(Math.random() * 12 ** 8)}`;
-  task.className = "task";
-  let deleteBtn = document.createElement("span");
-  deleteBtn.textContent = "X";
-  task.appendChild(deleteBtn);
-  tasksContainer.appendChild(task);
-  addToLocalStorage(task.id, task.title);
-  // if delete btn clicked
-  // add an event listener to the delete button
-  if (deleteBtn.onclick) {
-    deleteItem();
-  }
-  let deleteItem = deleteBtn.addEventListener("click", function () {
-    // remove the task from the tasksList array
-    let tasksList = JSON.parse(localStorage.getItem("tasks"));
-    let taskIndex = tasksList.findIndex((obj) => obj.id === task.id);
-    tasksList.splice(taskIndex, 1);
-    // update the localStorage with the updated tasksList array
-    localStorage.setItem("tasks", JSON.stringify(tasksList));
-    // remove the task from the DOM
-    task.remove();
-    if (tasksList.length === 0) {
-      window.localStorage.clear();
-    }
-    if (tasksList.length === 0) {
-      function clearDeleteBtn() {
-        tasksContainer.innerHTML = "";
-      }
-      clearDeleteBtn();
-    }
-    // createDelete;
-    // AllBtn();
-  });
-  // add drag and drop functionality to the task
-  task.draggable = true;
-  task.addEventListener("dragstart", function (event) {
-    event.dataTransfer.setData("text/plain", task.id);
-    event.dataTransfer.effectAllowed = "move";
-  });
-  task.addEventListener("dragover", function (event) {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  });
-  task.addEventListener("drop", function (event) {
-    event.preventDefault();
-    let taskId = event.dataTransfer.getData("text/plain");
-    let taskToMove = document.getElementById(taskId);
-    let taskToMoveIndex = Array.from(tasksContainer.children).indexOf(
-      taskToMove
-    );
-    let dropIndex = Array.from(tasksContainer.children).indexOf(task);
-    if (taskToMoveIndex < dropIndex) {
-      tasksContainer.insertBefore(taskToMove, task.nextSibling);
-    } else {
-      tasksContainer.insertBefore(taskToMove, task);
-    }
-    updateTasksOrder();
-  });
-  createDeleteAllBtn();
-}
-
-let myFqn = (submitBtn.onclick = function () {
-  if (enteredTxt.value.length > 0) {
-    createTask();
-    enteredTxt.value = "";
+function addFinalArrToLocalStorage() {
+  if (window.localStorage.getItem("tasks")) {
+    window.localStorage.clear();
+    window.localStorage.setItem("tasks", JSON.stringify(finalTasks));
   } else {
-    window.alert("Please Add Task Name");
+    window.localStorage.setItem("tasks", JSON.stringify(finalTasks));
+  }
+}
+
+function initializeTasks() {
+  clearOutput();
+  addToOutputSec();
+  AddDeleteAllBtn();
+  // Add event listeners to tasks for marking them as done or undone
+  let tasks = document.querySelectorAll(".task");
+  tasks.forEach(function (task) {
+    task.addEventListener("click", function () {
+      this.classList.toggle("done");
+      updateStatusInFinalTasks(this.id);
+      addFinalArrToLocalStorage();
+    });
+  });
+}
+
+///// create task and it's children and add them to DOM tree
+function addToOutputSec() {
+  for (let i = 0; i < finalTasks.length; i++) {
+    let myTask = document.createElement("div");
+    let myTxt = document.createElement("p");
+    myTxt.innerHTML = finalTasks[i].title;
+    let deleteBtn = document.createElement("span");
+    myTask.className = "task";
+    myTask.id = finalTasks[i].id;
+    if (finalTasks[i].status === "complete") {
+      myTask.classList.add("done");
+    }
+    myTask.classList.add("animation-effect");
+    deleteBtn.textContent = "remove";
+    deleteBtn.className = "delete";
+    /// appending to DOM
+    myTask.append(myTxt);
+    myTask.append(deleteBtn);
+    outputSec.appendChild(myTask);
+    //// update mark done for each element
+    myTask.addEventListener("click", function () {
+      this.classList.toggle("done");
+      updateStatusInFinalTasks(this.id);
+      addFinalArrToLocalStorage();
+    });
+  }
+}
+
+//// create DeleteAllBtn and add it to BOM tree
+function AddDeleteAllBtn() {
+  let deleteAllBtn = document.createElement("div");
+  deleteAllBtn.innerHTML = "Delete all";
+  deleteAllBtn.className = "delete-all";
+  outputSec.appendChild(deleteAllBtn);
+}
+
+//// -----------------------------------------------  adding functions --------------------------------------------------------
+
+//// -----------------------------------------------  removing functions ------------------------------------------------------
+///// filter removed task from FinalTasks array
+function removeTaskFromFinalTasks(deletedTaskId) {
+  for (let i = 0; i < finalTasks.length; i++) {
+    if (finalTasks[i].id === deletedTaskId) {
+      finalTasks[i] = "";
+    }
+  }
+  finalTasks = finalTasks.filter((e) => e !== "");
+}
+
+///// action of removing task from DOM after user click remove or [x]
+function removeTaskFromDOM(elementId) {
+  removeTaskFromFinalTasks(elementId);
+  clearOutput();
+  if (finalTasks.length > 0) {
+    AddDeleteAllBtn();
+  }
+  addToOutputSec();
+  addFinalArrToLocalStorage();
+  if (finalTasks.length === 0) {
+    window.localStorage.clear();
+  }
+  clearInput();
+}
+
+///// clear To-Do app
+function removeAllTask() {
+  finalTasks.length = 0;
+  clearOutput();
+  addFinalArrToLocalStorage();
+  window.localStorage.clear();
+}
+
+//// -----------------------------------------------  removing functions --------------------------------------------------------
+
+//// update status in FinalTasks Array
+function updateStatusInFinalTasks(taskId) {
+  for (let i = 0; i < finalTasks.length; i++) {
+    if (finalTasks[i].id === taskId) {
+      if (finalTasks[i].status === "complete") {
+        finalTasks[i].status = "incomplete";
+      } else {
+        finalTasks[i].status = "complete";
+      }
+      break;
+    }
+  }
+}
+
+//// --------------------------------------------------------  main functions -----------------------------------------------------
+
+//// run app conditions
+
+//// import tasks from localStorage if there are any tasks
+if (window.localStorage.getItem("tasks")) {
+  finalTasks = JSON.parse(localStorage.getItem("tasks"));
+  clearOutput();
+  addToOutputSec();
+  AddDeleteAllBtn();
+  initializeTasks();
+}
+
+///// action of adding task to DOM after user click [add task]
+function confirmAddingTask() {
+  //// clear outputSec before updating elements
+  addTaskToFinalArr();
+  clearOutput();
+  addToOutputSec();
+  AddDeleteAllBtn();
+  addFinalArrToLocalStorage();
+  clearInput();
+}
+
+//// implement delete function or delete all function
+document.addEventListener("click", function (e) {
+  if (event.target.className === "delete") {
+    let deletedTaskId = e.target.parentElement.id;
+    removeTaskFromDOM(deletedTaskId);
+  } else if (e.target.className === "delete-all") {
+    removeAllTask();
+
+  }
+});
+
+//// mark task done or undo after user click on it
+if (finalTasks.length > 0) {
+  let tasks = document.querySelectorAll(".task");
+  tasks.forEach(function (task) {
+    task.addEventListener("click", function () {
+      this.classList.toggle("done");
+      updateStatusInFinalTasks(this.id);
+      addFinalArrToLocalStorage();
+    });
+  });
+}
+
+///// check if the input is not empty
+let myFqn = (addBtn.onclick = function () {
+  if (input.value.length === 0 || input.value === " ") {
+    alert("please enter a task");
+  } else {
+    confirmAddingTask();
   }
 });
 
@@ -180,89 +213,24 @@ document.addEventListener("keypress", function (event) {
   }
 });
 
-let allTasks = document.querySelectorAll(".tasks .task");
+//// --------------------------------------------------------  dynamic number -----------------------------------------------------
 
-tasksContainer.addEventListener("click", function (event) {
-  // check if the clicked element is a task
-  if (event.target.classList.contains("task")) {
-    // toggle the "done" class on the clicked task
-    event.target.classList.toggle("done");
-    changeStatus();
-  }
-});
+let totalTasks = document.querySelector(".completed-tasks");
+let completedTasks = document.querySelector(".completed-tasks");
+let remindTasks = document.querySelector(".remind-tasks");
+let task = document.querySelector(".task");
+// let totalTasksNum = outputSec.children.length - 1  ;
+// let completedTasksNum = task.classList.contains("done");
+// let remindTasksNum = !task.classList.contains("done");
 
-function changeStatus() {
-  let tasksList = JSON.parse(localStorage.getItem("tasks"));
-  for (let i = 0; i < tasksList.length; i++) {
-    console.log(tasksList[i].status);
-    if (tasksList[i].status === "incomplete") {
-      tasksList[i].status = "complete";
-    } else {
-      tasksList[i].status = "incomplete";
-    }
-  }
-  // update the localStorage with the updated tasksList array
-  localStorage.setItem("tasks", JSON.stringify(tasksList));
-}
+// console.log(totalTasksNum, completedTasksNum, remindTasksNum);
 
-// function to create the delete all button
-function createDeleteAllBtn() {
-  // check if there are tasks in the tasksContainer
-  if (tasksContainer.children.length > 0) {
-    // check if the delete all button already exists
-    if (!document.querySelector(".delete-all")) {
-      let deleteAllBtn = document.createElement("button");
-      deleteAllBtn.textContent = "Delete All";
-      deleteAllBtn.className = "delete-all";
-      tasksContainer.insertAdjacentElement("beforebegin", deleteAllBtn);
-      // add event listener to the delete all button
-      deleteAllBtn.addEventListener("click", function () {
-        // remove all tasks from the DOM
-        tasksContainer.innerHTML = "";
-        // remove all tasks from the localStorage
-        localStorage.removeItem("tasks");
-        // remove the delete all button from the DOM
-        deleteAllBtn.remove();
-      });
-      // position the delete all button at the bottom middle of the task container
-      deleteAllBtn.style.position = "absolute";
-      deleteAllBtn.style.bottom = "-20px";
-      deleteAllBtn.style.left = "50%";
-      deleteAllBtn.style.transform = "translateX(-50%)";
-      tasksContainer.appendChild(deleteAllBtn);
-    }
-  } else {
-    // if there are no tasks in the tasksContainer, remove the delete all button if it exists
-    if (document.querySelector(".delete-all")) {
-      document.querySelector(" .delete-all").remove();
-    }
-    
-  }
-}
-
-// function to update the order of tasks in the localStorage
-function updateTasksOrder() {
-  let tasks = tasksContainer.children;
-  let tasksList = [];
-  for (let i = 0; i < tasks.length; i++) {
-    let task = tasks[i];
-    let taskId = task.id;
-    let taskTitle = task.title;
-    let taskStatus = task.classList.contains("done")
-      ? "complete"
-      : "incomplete";
-    tasksList.push({
-      id: taskId,
-      title: taskTitle,
-      status: taskStatus,
-    });
-  }
-  localStorage.setItem("tasks", JSON.stringify(tasksList));
-}
-
-if (tasksList.length === 0) {
-  function clearDeleteBtn() {
-    tasksContainer.innerHTML = "";
-  }
-  clearDeleteBtn();
+function changeStatus(
+  totalTasksNum = 0,
+  completedTasksNum = 0,
+  remindTasksNum = 0
+) {
+  totalTasks.innerHTML = `To Dos: ${totalTasksNum}`;
+  completedTasks.innerHTML = `completed: ${completedTasksNum}`;
+  remindTasks.innerHTML = `${remindTasksNum} more to go!`;
 }

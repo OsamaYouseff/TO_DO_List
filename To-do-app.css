@@ -1,0 +1,582 @@
+@import url("https://fonts.cdnfonts.com/css/sf-pro-display");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  list-style: none;
+}
+
+body {
+  font-family: "SF Pro Display", sans-serif;
+  /* background: white; */
+  min-height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: url(macos-big-sur-apple-layers-fluidic-colorful-wwdc-stock-4096x2304-1455.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+:root {
+  --text-color: #968e8d;
+  --transition: 0.34s;
+}
+
+.container {
+  position: relative;
+  background-color: #ffffff;
+  width: 69%;
+  height: fit-content;
+  min-height: 85%;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  border-radius: 10px;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  box-shadow: 0 0 10px #777;
+  transition: var(--transition);
+}
+
+@media (max-width: 1199px) {
+  .container {
+    width: 90%;
+  }
+}
+@media (max-width: 991px) {
+  .container {
+    width: 96%;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    top: 50%;
+  }
+}
+
+header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 44px;
+  max-height: 715px;
+  background-color: #fef5f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 20px;
+  border-bottom: 1px solid #ebe7e7;
+}
+
+@media (max-width: 1199px) {
+  header {
+    padding: 13px 60px;
+    scale: 0.9;
+    background-color: transparent;
+  }
+}
+
+header .control {
+  width: 15%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+header .multi-tasking {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-left: 15px;
+}
+
+header .multi-tasking i {
+  margin: 0px 8px;
+  font-size: 14px;
+  color: var(--text-color);
+  cursor: pointer;
+}
+header .multi-tasking .move {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+header .multi-tasking .move i {
+  cursor: pointer;
+}
+header .multi-tasking .move i:last-child {
+  opacity: 0.5;
+}
+
+header .control span {
+  width: 11px;
+  height: 11px;
+  aspect-ratio: 1/ 1;
+  border-radius: 50%;
+  background-color: #e60000;
+  margin: 3px;
+  cursor: pointer;
+}
+
+header .control span:first-of-type {
+  background-color: #ff5f57;
+}
+header .control span:nth-of-type(2) {
+  background-color: #febd30;
+}
+header .control span:last-of-type {
+  background-color: #27c840;
+}
+
+header .search {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  color: var(--text-color);
+}
+
+header .search .search-bar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 3px;
+  background-color: #f0e8e8;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  height: 25px;
+  padding: 0 15px;
+  flex: 1;
+  margin-left: 8px;
+  border-radius: 6px;
+  text-align: center;
+  cursor: text;
+}
+
+header .search .search-bar i {
+  position: absolute;
+  right: 3%;
+  font-size: 12px;
+  transform: rotate(-60deg);
+  opacity: 0.6;
+}
+
+header .action {
+  width: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-color);
+  gap: 10px;
+}
+header .action > i {
+  font-size: 13px;
+  cursor: pointer;
+}
+header .share {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+header .share span {
+  position: relative;
+  width: 11px;
+  height: 11px;
+  aspect-ratio: 1/ 1;
+  border: 1px solid var(--text-color);
+}
+header .share span i {
+  position: absolute;
+  top: 10%;
+  font-size: 11px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--text-color);
+}
+
+header .multi {
+  position: relative;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-3px, -1px);
+  cursor: pointer;
+}
+
+header .multi span {
+  position: absolute;
+  width: 11px;
+  height: 12px;
+  aspect-ratio: 1/ 1;
+  border: 1px solid #978f8f;
+  background-color: #fef5f5;
+}
+
+header .multi span:first-child {
+  position: absolute;
+  transform: translate(3px, 3px);
+  z-index: 2;
+}
+
+.logos {
+  position: absolute;
+  width: 90%;
+  height: 50px;
+  top: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  left: 50%;
+  transform: translateX(-50%);
+}
+@media (max-width: 767px) {
+  .logos {
+    justify-content: space-between;
+    gap: 30px;
+  }
+}
+
+.logos .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  aspect-ratio: 1/ 1;
+}
+
+.logos .logo img {
+  max-width: 100%;
+  border: 1px solid black;
+  border-radius: 50%;
+  user-select: none;
+}
+
+.logos p {
+  font-size: 13px;
+  font-weight: bolder;
+  user-select: none;
+}
+
+.main-sec {
+  position: absolute;
+  top: 10%;
+  width: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.main-sec .status {
+  font-weight: bolder;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  user-select: none;
+}
+
+.main-sec .status > div {
+  padding: 10px 0;
+  margin-bottom: 2px;
+}
+.main-sec .status > div span {
+  padding: 0 3px;
+  text-align: center;
+}
+.main-sec .status > div span:first-child {
+  border-right: 2px solid var(--text-color);
+}
+
+.main-sec .status p {
+  padding: 5px;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 767px) {
+  .main-sec {
+    position: absolute;
+    width: 90%;
+    top: 20%;
+  }
+}
+
+.tasks {
+  background-color: #ffff;
+  border-radius: 6px;
+  /* padding: 20px; */
+  width: 100%;
+  /* background-color: #ddd; */
+}
+.tasks .task {
+  background-color: white;
+  padding: 12px 10px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: var(--transition);
+  cursor: pointer;
+  border: 1px solid #e8e8e8;
+  padding-left: 20px;
+  letter-spacing: 0.5px;
+  /* box-shadow: 0 0 4px #d6d6d6; */
+}
+.tasks .task:not(:last-child) {
+  margin-bottom: 8px;
+}
+.tasks .task:hover {
+  background-color: #f7f7f7;
+}
+.tasks .task.done {
+  position: relative;
+  opacity: 0.8;
+  background-color: #000001;
+  color: white;
+}
+
+.tasks .task p {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.tasks .task.done p {
+  text-decoration: line-through;
+}
+
+.tasks .task span {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  font-size: 12px;
+  background-color: #ff4f46;
+  color: white;
+  padding: 4px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none !important;
+  transition: var(--transition);
+}
+.tasks .task span:hover {
+  background-color: red;
+}
+.delete-all {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #3ab7b3;
+  color: white;
+  border: none;
+  margin-inline: auto;
+  width: 90px;
+  text-align: center;
+  padding: 8px 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 0px;
+  letter-spacing: 0.5px;
+  transition: var(--transition);
+  border: 1px solid white;
+  z-index: 9999;
+}
+.delete-all:hover {
+  background-color: #e60000;
+}
+
+.form {
+  background-color: white;
+  box-shadow: 0 0 20px #ffe8e8;
+  border: 1px solid #f9d8d8;
+  border-radius: 10px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  width: 50%;
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 767px) {
+  .form {
+    width: 90%;
+  }
+}
+
+.input {
+  padding: 0px 10px;
+  height: 100%;
+  border: none;
+  border-radius: 6px;
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.input::placeholder {
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.input:focus {
+  outline: none;
+}
+.add {
+  background-color: white;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 10px;
+  cursor: pointer;
+  border: 2px solid black;
+  border-radius: 50%;
+}
+
+.tool-bar {
+  position: absolute;
+  bottom: 2%;
+  width: 56%;
+  height: 50px;
+  background-color: #d4d4d491;
+  border-radius: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.tool-bar span {
+  height: 30px;
+  width: 30px;
+  background-color: #ffffffac;
+  border-radius: 6px;
+}
+
+@media (max-width: 991px) {
+  .tool-bar {
+    display: none;
+  }
+}
+/* .tool-bar span:not(last-child) {
+  margin-left: 20px;
+} */
+
+/* body {
+  background: linear-gradient(270deg, #00bcd4, #c44ce599);
+  background-size: 400% 400%;
+  -webkit-animation: AnimationName 3s ease infinite;
+  -moz-animation: AnimationName 3s ease infinite;
+  animation: AnimationName 3s ease infinite;
+} */
+
+/* .task input {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.task input + label {
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+}
+.task input + label {
+  user-select: none;
+}
+.task input[type="checkbox"] + label::before {
+  content: "";
+  position: absolute;
+  width: 17px;
+  border: 1px solid #f9f9f9;
+  left: 0px;
+  top: 50%;
+  margin-top: -8.5008px;
+  aspect-ratio: 1 / 1;
+  border-radius: 5px;
+}
+.task input[type="checkbox"] + label:hover::before {
+  border-color: var(--blue-alt-color);
+}
+.task input[type="checkbox"] + label::after {
+  content: "\f00c";
+  position: absolute;
+  font-family: var(--fa-style-family-classic);
+  font-weight: 900;
+  width: 21px;
+  aspect-ratio: 1 / 1;
+  font-size: 12px;
+  left: 0px;
+  top: 50%;
+  margin-top: -9px;
+  border-radius: 5px;
+  color: white;
+  background-color: blue;
+  display: grid;
+  place-items: center;
+  transform: rotate(-360deg) scale(0);
+  transition: transform calc(0.35s * 0.8);
+}
+.task input[type="checkbox"]:checked + label::after {
+  transform: rotate(0) scale(1);
+} */
+
+/* CSS class with animation effect */
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.animation-effect {
+  animation: slide-in 0.4s linear;
+  /* Define other styles and properties */
+}
+
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: 22% 0%;
+  }
+  50% {
+    background-position: 79% 100%;
+  }
+  100% {
+    background-position: 22% 0%;
+  }
+}
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 22% 0%;
+  }
+  50% {
+    background-position: 79% 100%;
+  }
+  100% {
+    background-position: 22% 0%;
+  }
+}
+@keyframes AnimationName {
+  0% {
+    background-position: 22% 0%;
+  }
+  50% {
+    background-position: 79% 100%;
+  }
+  100% {
+    background-position: 22% 0%;
+  }
+}
