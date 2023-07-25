@@ -14,14 +14,30 @@ body {
   min-height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background: url(macos-big-sur-apple-layers-fluidic-colorful-wwdc-stock-4096x2304-1455.jpg);
+  background: url(macos-big-sur-background-resized.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  transition: var(--transition);
+}
+::-webkit-scrollbar-track {
+  background-color: white;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #eee;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ddd;
+}
+
 :root {
   --text-color: #968e8d;
-  --transition: 0.34s;
+  --transition: 0.4s;
+  --red-color: #e60000;
 }
 
 .container {
@@ -31,7 +47,7 @@ body {
   height: fit-content;
   min-height: 85%;
   position: absolute;
-  top: 45%;
+  top: 45.5%;
   left: 50%;
   border-radius: 10px;
   transform: translate(-50%, -50%);
@@ -43,11 +59,13 @@ body {
 @media (max-width: 1199px) {
   .container {
     width: 90%;
+    top: 45.5%;
   }
 }
 @media (max-width: 991px) {
   .container {
     width: 96%;
+    top: 50%;
   }
 }
 @media (max-width: 767px) {
@@ -228,6 +246,23 @@ header .multi span:first-child {
   z-index: 2;
 }
 
+@media (max-width: 450px) {
+  header {
+    padding-inline: 0px;
+    /* scale: 1; */
+  }
+  header .multi-tasking {
+    display: none;
+  }
+
+  header .search {
+    width: 60%;
+  }
+  header .action {
+    width: 16%;
+  }
+}
+
 .logos {
   position: absolute;
   width: 90%;
@@ -267,34 +302,48 @@ header .multi span:first-child {
   user-select: none;
 }
 
-.main-sec {
-  position: absolute;
-  top: 10%;
-  width: 50%;
-  left: 50%;
-  transform: translateX(-50%);
+.contact-link {
+  cursor: pointer;
+  text-decoration: none;
+  color: #3ab7b3;
+  font-size: 15px;
 }
 
-.main-sec .status {
+.main-sec {
+  position: absolute;
+  top: 20%;
+  width: 60%;
+  height: 60%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px;
+  overflow-y: auto;
+}
+
+.status {
+  position: absolute;
+  top: 8%;
+  left: 29%;
+  transform: translateX(-50%);
   font-weight: bolder;
   font-size: 14px;
   letter-spacing: 0.5px;
   user-select: none;
 }
 
-.main-sec .status > div {
+.status > div {
   padding: 10px 0;
   margin-bottom: 2px;
 }
-.main-sec .status > div span {
+.status > div span {
   padding: 0 3px;
   text-align: center;
 }
-.main-sec .status > div span:first-child {
+.status > div span:first-child {
   border-right: 2px solid var(--text-color);
 }
 
-.main-sec .status p {
+.status p {
   padding: 5px;
   font-size: 15px;
   margin-bottom: 8px;
@@ -306,13 +355,19 @@ header .multi span:first-child {
     width: 90%;
     top: 20%;
   }
+  .status {
+    left: 35%;
+    scale: 0.8;
+  }
 }
 
 .tasks {
   background-color: #ffff;
   border-radius: 6px;
-  /* padding: 20px; */
   width: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  /* padding: 20px; */
   /* background-color: #ddd; */
 }
 .tasks .task {
@@ -368,7 +423,7 @@ header .multi span:first-child {
 }
 .delete-all {
   position: absolute;
-  bottom: -40px;
+  /* bottom: 0px; */
   left: 50%;
   transform: translateX(-50%);
   background-color: #3ab7b3;
@@ -381,7 +436,7 @@ header .multi span:first-child {
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  margin-bottom: 0px;
+  margin-bottom: -35px;
   letter-spacing: 0.5px;
   transition: var(--transition);
   border: 1px solid white;
@@ -393,7 +448,8 @@ header .multi span:first-child {
 
 .form {
   background-color: white;
-  box-shadow: 0 0 20px #ffe8e8;
+  /* box-shadow: 0 0 20px #ffe8e8; */
+  box-shadow: 0 0 0px 35px white;
   border: 1px solid #f9d8d8;
   border-radius: 10px;
   padding: 12px 20px;
@@ -401,9 +457,10 @@ header .multi span:first-child {
   align-items: center;
   width: 50%;
   position: absolute;
-  bottom: 5%;
+  bottom: 4%;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 999;
 }
 
 @media (max-width: 767px) {
@@ -469,66 +526,6 @@ header .multi span:first-child {
     display: none;
   }
 }
-/* .tool-bar span:not(last-child) {
-  margin-left: 20px;
-} */
-
-/* body {
-  background: linear-gradient(270deg, #00bcd4, #c44ce599);
-  background-size: 400% 400%;
-  -webkit-animation: AnimationName 3s ease infinite;
-  -moz-animation: AnimationName 3s ease infinite;
-  animation: AnimationName 3s ease infinite;
-} */
-
-/* .task input {
-  -webkit-appearance: none;
-  appearance: none;
-}
-.task input + label {
-  position: relative;
-  padding-left: 30px;
-  cursor: pointer;
-}
-.task input + label {
-  user-select: none;
-}
-.task input[type="checkbox"] + label::before {
-  content: "";
-  position: absolute;
-  width: 17px;
-  border: 1px solid #f9f9f9;
-  left: 0px;
-  top: 50%;
-  margin-top: -8.5008px;
-  aspect-ratio: 1 / 1;
-  border-radius: 5px;
-}
-.task input[type="checkbox"] + label:hover::before {
-  border-color: var(--blue-alt-color);
-}
-.task input[type="checkbox"] + label::after {
-  content: "\f00c";
-  position: absolute;
-  font-family: var(--fa-style-family-classic);
-  font-weight: 900;
-  width: 21px;
-  aspect-ratio: 1 / 1;
-  font-size: 12px;
-  left: 0px;
-  top: 50%;
-  margin-top: -9px;
-  border-radius: 5px;
-  color: white;
-  background-color: blue;
-  display: grid;
-  place-items: center;
-  transform: rotate(-360deg) scale(0);
-  transition: transform calc(0.35s * 0.8);
-}
-.task input[type="checkbox"]:checked + label::after {
-  transform: rotate(0) scale(1);
-} */
 
 /* CSS class with animation effect */
 @keyframes slide-in {

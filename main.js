@@ -6,6 +6,32 @@ let inputTasks = [];
 let finalTasks = [];
 ///// ----------------------------------------------  Global variables  ----------------------------------------------------
 
+//// -------------------------------------------------------- Updating status numbers dynamically  -----------------------------------------------------
+
+let totalTasksContainer = document.getElementById("total-tasks");
+let completedTasksContainer = document.getElementById("completed-tasks");
+let remindTasksContainer = document.getElementById("remind-tasks");
+
+function dynamicChangingNumbers() {
+  let allTasks = Array.from(document.querySelectorAll(".task"));
+
+  //// changing all tasks number
+  let totalTasksNumber = allTasks.length;
+  totalTasksContainer.textContent = `To Dos : ${totalTasksNumber} `;
+
+  //// changing completed tasks
+  let compTasksNumber = Array.from(document.querySelectorAll(".done")).length;
+  completedTasksContainer.textContent = ` Completed: ${compTasksNumber}`;
+
+  //// changing remind tasks
+  let remindNumber = allTasks.length - compTasksNumber;
+  remindTasksContainer.textContent = `${remindNumber} more to go! `;
+}
+
+dynamicChangingNumbers();
+
+//// -------------------------------------------------------- Updating status numbers dynamically  -----------------------------------------------------
+
 ///// ----------------------------------------------  secondary functions  -------------------------------------------------
 function createRandomId() {
   let random = Math.floor(Math.random() * 10);
@@ -88,6 +114,7 @@ function addToOutputSec() {
       addFinalArrToLocalStorage();
     });
   }
+  dynamicChangingNumbers();
 }
 
 //// create DeleteAllBtn and add it to BOM tree
@@ -109,6 +136,7 @@ function removeTaskFromFinalTasks(deletedTaskId) {
     }
   }
   finalTasks = finalTasks.filter((e) => e !== "");
+  dynamicChangingNumbers();
 }
 
 ///// action of removing task from DOM after user click remove or [x]
@@ -124,6 +152,7 @@ function removeTaskFromDOM(elementId) {
     window.localStorage.clear();
   }
   clearInput();
+  dynamicChangingNumbers();
 }
 
 ///// clear To-Do app
@@ -132,6 +161,7 @@ function removeAllTask() {
   clearOutput();
   addFinalArrToLocalStorage();
   window.localStorage.clear();
+  dynamicChangingNumbers();
 }
 
 //// -----------------------------------------------  removing functions --------------------------------------------------------
@@ -148,6 +178,7 @@ function updateStatusInFinalTasks(taskId) {
       break;
     }
   }
+  dynamicChangingNumbers();
 }
 
 //// --------------------------------------------------------  main functions -----------------------------------------------------
@@ -161,6 +192,7 @@ if (window.localStorage.getItem("tasks")) {
   addToOutputSec();
   AddDeleteAllBtn();
   initializeTasks();
+  dynamicChangingNumbers();
 }
 
 ///// action of adding task to DOM after user click [add task]
@@ -172,6 +204,7 @@ function confirmAddingTask() {
   AddDeleteAllBtn();
   addFinalArrToLocalStorage();
   clearInput();
+  dynamicChangingNumbers();
 }
 
 //// implement delete function or delete all function
@@ -179,12 +212,14 @@ document.addEventListener("click", function (e) {
   if (event.target.className === "delete") {
     let deletedTaskId = e.target.parentElement.id;
     removeTaskFromDOM(deletedTaskId);
+    dynamicChangingNumbers();
   } else if (e.target.className === "delete-all") {
-    removeAllTask();
-
+    if (confirm("Are you sure that you want to delete all tasks ?  ")) {
+      removeAllTask();
+      dynamicChangingNumbers();
+    }
   }
 });
-
 //// mark task done or undo after user click on it
 if (finalTasks.length > 0) {
   let tasks = document.querySelectorAll(".task");
@@ -193,6 +228,7 @@ if (finalTasks.length > 0) {
       this.classList.toggle("done");
       updateStatusInFinalTasks(this.id);
       addFinalArrToLocalStorage();
+      dynamicChangingNumbers();
     });
   });
 }
@@ -210,27 +246,8 @@ let myFqn = (addBtn.onclick = function () {
 document.addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
     myFqn();
+    dynamicChangingNumbers();
   }
 });
 
-//// --------------------------------------------------------  dynamic number -----------------------------------------------------
-
-let totalTasks = document.querySelector(".completed-tasks");
-let completedTasks = document.querySelector(".completed-tasks");
-let remindTasks = document.querySelector(".remind-tasks");
-let task = document.querySelector(".task");
-// let totalTasksNum = outputSec.children.length - 1  ;
-// let completedTasksNum = task.classList.contains("done");
-// let remindTasksNum = !task.classList.contains("done");
-
-// console.log(totalTasksNum, completedTasksNum, remindTasksNum);
-
-function changeStatus(
-  totalTasksNum = 0,
-  completedTasksNum = 0,
-  remindTasksNum = 0
-) {
-  totalTasks.innerHTML = `To Dos: ${totalTasksNum}`;
-  completedTasks.innerHTML = `completed: ${completedTasksNum}`;
-  remindTasks.innerHTML = `${remindTasksNum} more to go!`;
-}
+//// --------------------------------------------------------  main functions -----------------------------------------------------
