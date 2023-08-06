@@ -30,6 +30,6 @@ TO-DO List is a simple and responsive web app that provides an easy way to organ
 
 ## preview project image :
 
-![Example Image](images/to-do.png)
+![Example Image](./images/to-do.png)
 
 ## Live Demo : https://osamayouseff.github.io/TO_DO_List/
