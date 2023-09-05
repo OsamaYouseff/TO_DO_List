@@ -8,6 +8,8 @@ TO-DO List is a simple and responsive web app that allows you to organize your d
 - Easy-to-use interface: The app is designed to be simple to use, with intuitive controls to add, delete, and edit tasks.
 - Responsive design: The app is responsive, ensuring that it looks great on all devices, from mobile phones to desktops.
 - Performance optimized: The app is optimized for performance, ensuring that it runs smoothly and efficiently, even on slower connections.
+- you can now know when this task created.
+- also you can now edit the task name with a new name any time you want.
 
 ## Getting Started:
 
