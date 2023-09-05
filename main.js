@@ -368,9 +368,9 @@ if (finalTasks.length > 0) {
   let tasks = document.querySelectorAll(".task");
   tasks.forEach(function (task) {
     task.addEventListener("click", function () {
-      //// ignore mark done if user doesn't click the  task
+      //// ignore mark done if user doesn't click the task itself
       if (event.target.classList[0] !== "task") {
-        return 0;
+        return;
       }
       this.classList.toggle("done");
       updateStatusInFinalTasks(this.id);
