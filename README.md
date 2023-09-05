@@ -31,6 +31,7 @@ TO-DO List is a simple and responsive web app that allows you to organize your d
 TO-DO List is a simple and responsive web app that provides an easy way to organize your daily tasks. With its use of local storage, your data is always available, even if the app is closed or if you switch devices. The app is designed with a focus on performance, ensuring that it runs smoothly and efficiently, even on slower connections.
 
 ## preview project image :
-![to-do](https://github.com/OsamaYouseff/TO_DO_List/assets/94643063/9688da19-a3cb-410f-bf0c-8b9fb8010ad0)
+
+![Example Image](images/to-do.png)
 
 ## Live Demo : https://osamayouseff.github.io/TO_DO_List/
