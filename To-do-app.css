@@ -285,7 +285,7 @@ header .multi span:first-child {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
+  width: 40px;
   aspect-ratio: 1/ 1;
 }
 
@@ -297,7 +297,7 @@ header .multi span:first-child {
 }
 
 .logos p {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: bolder;
   user-select: none;
 }
@@ -306,12 +306,21 @@ header .multi span:first-child {
   cursor: pointer;
   text-decoration: none;
   color: var(--master-color);
-  font-size: 15px;
+  font-size: 16px;
+}
+
+@media (max-width: 767px) {
+  .logos p {
+    font-size: 13px;
+  }
+  .contact-link {
+    font-size: 12px;
+  }
 }
 
 .main-sec {
   position: absolute;
-  top: 20%;
+  top: 21%;
   width: 60%;
   height: 60%;
   left: 50%;
@@ -363,7 +372,7 @@ header .multi span:first-child {
 @media (max-width: 767px) {
   .main-sec {
     position: absolute;
-    width: 90%;
+    width: 93%;
     top: 20%;
   }
   .status {
@@ -412,7 +421,7 @@ header .multi span:first-child {
 
 .tasks .task .task-info {
   font-weight: 600;
-  font-size: 20px;
+  font-size: 18px;
 }
 .tasks .task.done .title {
   text-decoration: line-through;
@@ -427,7 +436,7 @@ header .multi span:first-child {
   font-size: 12px;
   margin-top: 7px;
   color: #777;
-  padding-left: 42px;
+  padding-left: 30px;
 }
 
 .tasks .task .btns {
@@ -520,8 +529,8 @@ header .multi span:first-child {
   border: none;
   border-radius: 6px;
   flex: 1;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 800;
 }
 
 .input::placeholder {
